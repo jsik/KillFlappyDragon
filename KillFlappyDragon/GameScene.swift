@@ -12,26 +12,32 @@ import GameplayKit
 class GameScene: SKScene, SKPhysicsContactDelegate {
     
     var plane:SKSpriteNode!
-
-    private var label : SKLabelNode?
-    private var spinnyNode : SKShapeNode?
     
     override func didMove(to view: SKView) {
         self.backgroundColor = .white
-        self.addBackground()
+        self.addBg()
+        self.addPlane()
     }
 
-    func addBackground() {
-        for index in 0..<2 {
+    func addBg() {
+        for i in 0..<2 {
             let bg = SKSpriteNode(imageNamed: "Background")
-            bg.position = CGPoint(x: index * Int(bg.size.width), y: 0)
+            bg.position = CGPoint(x: i * Int(bg.size.width), y: 0)
             bg.anchorPoint = CGPoint(x: 0, y: 0)
             bg.name = "background"
             
             self.addChild(bg)
         }
     }
-
+    
+    func addPlane(){
+        plane = SKSpriteNode(imageNamed: "FlyPlane")
+        plane.name = "plane"
+        plane.position = CGPoint(x: 120, y: 160)
+        plane.setScale(0.25)
+        self.addChild(plane)
+    }
+    
     func touchDown(atPoint pos : CGPoint) {
 //        if let n = self.spinnyNode?.copy() as! SKShapeNode? {
 //            n.position = pos
@@ -78,14 +84,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     
     override func update(_ currentTime: TimeInterval) {
-        self.enumerateChildNodes(withName: "background", using: {(node, stop) -> Void in
-            if let bg = node as? SKSpriteNode {
-                bg.position = CGPoint(x: bg.position.x - 3.0, y: bg.position.y)
-                
-                if bg.position.x <= -bg.size.width {
-                    bg.position = CGPoint(x: bg.position.x + bg.size.width * 2, y: bg.position.y)
-                }
-            }
-        })
+//        self.enumerateChildNodes(withName: "background", using: {(node, stop) -> Void in
+//            if let bg = node as? SKSpriteNode {
+//                bg.position = CGPoint(x: bg.position.x - 3.0, y: bg.position.y)
+//                
+//                if bg.position.x <= -bg.size.width {
+//                    bg.position = CGPoint(x: bg.position.x + bg.size.width * 2, y: bg.position.y)
+//                }
+//            }
+//        })
     }
 }
