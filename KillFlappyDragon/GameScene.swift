@@ -10,32 +10,48 @@ import SpriteKit
 import GameplayKit
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
+    let MAX_DRAGON = 10
     
     var plane:SKSpriteNode!
+    var moveUpPlane: SKAction!
+    var moveDownPlane: SKAction!
+    var countFlappyDragon = 0
+    var lastFlappyDragon: TimeInterval = 0
     
     override func didMove(to view: SKView) {
         self.backgroundColor = .white
         self.addBg()
         self.addPlane()
+        self.addFlappyDragon()
     }
 
     func addBg() {
-        for i in 0..<2 {
-            let bg = SKSpriteNode(imageNamed: "Background")
-            bg.position = CGPoint(x: i * Int(bg.size.width), y: 0)
-            bg.anchorPoint = CGPoint(x: 0, y: 0)
-            bg.name = "background"
-            
-            self.addChild(bg)
-        }
+        let bg = SKSpriteNode(imageNamed: "Background")
+        bg.position = CGPoint(x: 0, y: 0)
+        bg.anchorPoint = CGPoint(x: 0, y: 0)
+        bg.name = "background"
+        
+        self.addChild(bg)
     }
     
     func addPlane(){
         plane = SKSpriteNode(imageNamed: "FlyPlane")
         plane.name = "plane"
-        plane.position = CGPoint(x: 120, y: 160)
+        plane.position = CGPoint(x: 100, y: 100)
         plane.setScale(0.25)
+        
+        moveUpPlane = SKAction.moveBy(x: 0, y: 30, duration: 0.2)
+        moveDownPlane = SKAction.moveBy(x: 0, y: -30, duration: 0.2)
+            
         self.addChild(plane)
+    }
+    
+    func addFlappyDragon() {
+        let flappydragon = SKSpriteNode(imageNamed: "FlappyDragon")
+        flappydragon.position = CGPoint(x: self.frame.size.width - 20, y: CGFloat(arc4random_uniform(300)))
+        flappydragon.setScale(0.05)
+        flappydragon.name = "flappydragon"
+        self.addChild(flappydragon)
     }
     
     func touchDown(atPoint pos : CGPoint) {
@@ -63,35 +79,35 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-//        if let label = self.label {
-//            label.run(SKAction.init(named: "Pulse")!, withKey: "fadeInOut")
-//        }
-//        
-//        for t in touches { self.touchDown(atPoint: t.location(in: self)) }
+        for _: AnyObject in touches {
+            if plane.position.y < 300 {
+                plane.run(moveUpPlane)
+            } else if plane.position.y > 50 {
+                plane.run(moveDownPlane)
+            }
+        }
+
     }
-    
-    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-//        for t in touches { self.touchMoved(toPoint: t.location(in: self)) }
+
+    func moveFlappyDragon() {
+        self.enumerateChildNodes(withName: "flappydragon", using: {(node, stop) -> Void in
+            if let flappydragon = node as? SKSpriteNode {
+                flappydragon.position = CGPoint(x: flappydragon.position.x - 5.0, y: flappydragon.position.y)
+                
+                if flappydragon.position.x < 0 {
+                    flappydragon.removeFromParent()
+                    self.countFlappyDragon -= 1
+                }
+            }
+        })
     }
-    
-    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        //for t in touches { self.touchUp(atPoint: t.location(in: self)) }
-    }
-    
-    override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
-        //for t in touches { self.touchUp(atPoint: t.location(in: self)) }
-    }
-    
-    
+
     override func update(_ currentTime: TimeInterval) {
-//        self.enumerateChildNodes(withName: "background", using: {(node, stop) -> Void in
-//            if let bg = node as? SKSpriteNode {
-//                bg.position = CGPoint(x: bg.position.x - 3.0, y: bg.position.y)
-//                
-//                if bg.position.x <= -bg.size.width {
-//                    bg.position = CGPoint(x: bg.position.x + bg.size.width * 2, y: bg.position.y)
-//                }
-//            }
-//        })
+        self.moveFlappyDragon()
+        if (self.countFlappyDragon < self.MAX_DRAGON && self.lastFlappyDragon < currentTime - 1 ) {
+            self.countFlappyDragon += 1
+            self.lastFlappyDragon = currentTime + 1
+            self.addFlappyDragon()
+        }
     }
 }
