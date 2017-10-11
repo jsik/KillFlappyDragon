@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "80B30B879591D3EFE0A0B753A890E89C0F74B70A",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "08404CC562D412B875FA6A9FD2859FB68383E997" : 9223372036854775807,
+    "80B30B879591D3EFE0A0B753A890E89C0F74B70A" : 9223372036854775807
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "6E96E096-D42D-404D-8266-B64E8D4DAE5F",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "08404CC562D412B875FA6A9FD2859FB68383E997" : "",
+    "80B30B879591D3EFE0A0B753A890E89C0F74B70A" : "KillFlappyDragon\/"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "KillFlappyDragon",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "KillFlappyDragon.xcodeproj",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "github.com:RubyOnRails-JHU-605-484\/team15-spring16.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "08404CC562D412B875FA6A9FD2859FB68383E997"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "github.com:jsik\/KillFlappyDragon.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "80B30B879591D3EFE0A0B753A890E89C0F74B70A"
+    }
+  ]
+}
