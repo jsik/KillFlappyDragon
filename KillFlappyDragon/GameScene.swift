@@ -26,10 +26,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var deadPlane: SKAction!
     
     var countFlappyDragon = 0
+    var killedFlappyDragon = 0
     var lastFlappyDragon: TimeInterval = 0
-    
-    let planeCategory = 0x1 << 0
-    let bulletCategory = 0x1 << 1
     
     override func didMove(to view: SKView) {
         self.backgroundColor = .white
@@ -94,6 +92,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         projectile.physicsBody?.categoryBitMask = PhysicsCategory.bullet
         projectile.physicsBody?.contactTestBitMask = PhysicsCategory.dragon
         projectile.physicsBody?.collisionBitMask = PhysicsCategory.None
+        projectile.zPosition = 10
         
         projectile.name = "projectile"
         projectile.position = CGPoint(x: self.plane.position.x, y: self.plane.position.y)
@@ -114,24 +113,21 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func touchUp(atPoint pos : CGPoint) {
     }
     
-//    func didBegin(_ contact: SKPhysicsContact) {
-//        var firstBody:SKPhysicsBody
-//        var secondBody = SKPhysicsBody()
-//        
-//        if contact.bodyA.categoryBitMask < contact.bodyB.categoryBitMask
-//        {
-//            firstBody = contact.bodyA
-//            secondBody = contact.bodyB
-//        }
-//        else
-//        {
-//            firstBody = contact.bodyB
-//            secondBody = contact.bodyA
-//        }
-//        
-//        guard firstBody.node != nil else { return }
-//        (firstBody.node as! SKSpriteNode).removeFromParent()
-//    }
+    func didBegin(_ contact: SKPhysicsContact) {
+        var dragonBody:SKPhysicsBody
+        if (contact.bodyA.categoryBitMask == 2 && contact.bodyB.categoryBitMask == 1) {
+            print("Dragon hit plane")
+            plane.run(deadPlane)
+            //plane.removeFromParent()
+        } else if (contact.bodyA.categoryBitMask == 3 && contact.bodyB.categoryBitMask == 1) {
+            dragonBody = contact.bodyB
+            guard dragonBody.node != nil else { return }
+            (dragonBody.node as! SKSpriteNode).removeFromParent()
+            killedFlappyDragon += 1
+            countFlappyDragon -= 1
+            print("Projectile hit Dragon " + String(killedFlappyDragon))
+        }
+    }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         for touch: AnyObject in touches {
