@@ -41,6 +41,27 @@ class GameOverScene: SKScene {
             countLabel.position = CGPoint(x: self.size.width/2,y: self.textTop - 100)
             self.addChild(countLabel)
         }
+        
+        let replayButton = SKLabelNode(fontNamed: "Arial")
+        replayButton.text = "Play Again"
+        replayButton.fontSize = 30
+        replayButton.fontColor = .blue
+        replayButton.position = CGPoint(x: self.size.width/2, y: self.textTop - 200)
+        replayButton.name = "replay"
+        self.addChild(replayButton)
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        for touch: AnyObject in touches {
+            let location = touch.location(in: self)
+            let node = self.nodes(at: location).first
+            if node?.name == "replay" {
+                let reveal : SKTransition = SKTransition.flipHorizontal(withDuration: 0.5)
+                let scene = GameScene(size: self.view!.bounds.size)
+                scene.scaleMode = .aspectFill
+                self.view?.presentScene(scene, transition: reveal)
+            }
+        }
     }
     
     required init?(coder aDecoder: NSCoder) {
