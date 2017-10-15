@@ -20,6 +20,9 @@ struct PhysicsCategory {
 class GameScene: SKScene, SKPhysicsContactDelegate {
     let MAX_DRAGON = 10
     
+    var counter:SKLabelNode!
+    var updateCounter: SKAction!
+    
     var plane:SKSpriteNode!
     var moveUpPlane: SKAction!
     var moveDownPlane: SKAction!
@@ -33,11 +36,21 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.backgroundColor = .white
         self.addBg()
         self.addPlane()
+        self.addCounter()
         self.addFlappyDragon()
         physicsWorld.gravity = CGVector(dx: 0, dy: 0)
         physicsWorld.contactDelegate = self
     }
 
+    func addCounter () {
+        counter = SKLabelNode(fontNamed: "Arial")
+        counter.fontSize = 40
+        counter.fontColor = .red
+        counter.position = CGPoint(x: self.size.width - 100, y: self.size.height - 100)
+        counter.text = String(self.killedFlappyDragon) + " / 10"
+        self.addChild(counter)
+    }
+    
     func addBg() {
         let bg = SKSpriteNode(imageNamed: "Background")
         bg.position = CGPoint(x: 0, y: 0)
@@ -125,6 +138,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             guard dragonBody.node != nil else { return }
             (dragonBody.node as! SKSpriteNode).removeFromParent()
             self.killedFlappyDragon += 1
+            self.counter.text = String(self.killedFlappyDragon) + " / 10"
             countFlappyDragon -= 1
             print("Projectile hit Dragon " + String(self.killedFlappyDragon))
             if (self.killedFlappyDragon >= 10) {
@@ -136,7 +150,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func EndofGame(win: Bool) {
         let gameOverScene = GameOverScene(size: self.size)
         gameOverScene.winTheGame = win
-        gameOverScene.killedFlappyDragon = self.killedFlappyDragon
+        gameOverScene.flappyDragon = String(self.killedFlappyDragon)
         self.view?.presentScene(gameOverScene, transition: .doorway(withDuration: 1))
     }
     

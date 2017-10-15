@@ -10,7 +10,7 @@ import SpriteKit
 
 class GameOverScene: SKScene {
     var winTheGame: Bool = false
-    var killedFlappyDragon: Int = 0
+    var flappyDragon: String = "0"
     
     override init(size: CGSize) {
         super.init(size: size)
@@ -32,7 +32,7 @@ class GameOverScene: SKScene {
         self.addChild(resultLabel)
         
         if (!winTheGame) {
-            print(self.killedFlappyDragon)
+            print(self.flappyDragon)
 //            let countLabel = SKLabelNode(fontNamed: "Arial")
 //            resultLabel.text =
 //            resultLabel.fontSize = 30
