@@ -9,6 +9,14 @@
 import SpriteKit
 import GameplayKit
 
+struct PhysicsCategory {
+    static let None    : UInt32 = 0
+    static let All     : UInt32 = UInt32.max
+    static let dragon : UInt32 = 0b1  //1
+    static let plane   : UInt32 = 0b10 //2
+    static let bullet : UInt32 = 0b11 //3
+}
+
 class GameScene: SKScene, SKPhysicsContactDelegate {
     let MAX_DRAGON = 10
     
@@ -20,11 +28,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var countFlappyDragon = 0
     var lastFlappyDragon: TimeInterval = 0
     
+    let planeCategory = 0x1 << 0
+    let bulletCategory = 0x1 << 1
+    
     override func didMove(to view: SKView) {
         self.backgroundColor = .white
         self.addBg()
         self.addPlane()
         self.addFlappyDragon()
+        physicsWorld.gravity = CGVector(dx: 0, dy: 0)
+        physicsWorld.contactDelegate = self
     }
 
     func addBg() {
@@ -38,10 +51,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     func addPlane(){
         plane = SKSpriteNode(imageNamed: "FlyPlane")
-        plane.name = "plane"
-        plane.position = CGPoint(x: 100, y: 100)
         plane.setScale(0.25)
         
+        plane.physicsBody = SKPhysicsBody(rectangleOf: plane.size)
+        plane.physicsBody?.isDynamic = true
+        plane.physicsBody?.categoryBitMask = PhysicsCategory.plane
+        plane.physicsBody?.contactTestBitMask = PhysicsCategory.dragon
+        plane.physicsBody?.collisionBitMask = PhysicsCategory.None
+        
+        plane.name = "plane"
+        plane.position = CGPoint(x: 100, y: 100)
+
         moveUpPlane = SKAction.moveBy(x: 0, y: 30, duration: 0.2)
         moveDownPlane = SKAction.moveBy(x: 0, y: -30, duration: 0.2)
         deadPlane = SKAction.moveBy(x: 0, y: -1000, duration: 1)
@@ -51,17 +71,33 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     func addFlappyDragon() {
         let flappydragon = SKSpriteNode(imageNamed: "FlappyDragon")
-        flappydragon.position = CGPoint(x: self.frame.size.width - 20, y: CGFloat(arc4random_uniform(300)))
         flappydragon.setScale(0.05)
+        
+        flappydragon.physicsBody = SKPhysicsBody(rectangleOf: flappydragon.size)
+        flappydragon.physicsBody?.isDynamic = true
+        flappydragon.physicsBody?.categoryBitMask = PhysicsCategory.dragon
+        flappydragon.physicsBody?.contactTestBitMask = PhysicsCategory.bullet
+        flappydragon.physicsBody?.collisionBitMask = PhysicsCategory.None
+        
         flappydragon.name = "flappydragon"
+        flappydragon.position = CGPoint(x: self.frame.size.width - 20, y: CGFloat(arc4random_uniform(300)))
+        
         self.addChild(flappydragon)
     }
     
     func addProjectile() {
         let projectile = SKSpriteNode(imageNamed: "Bullet")
-        projectile.position = CGPoint(x: self.plane.position.x, y: self.plane.position.y)
         projectile.setScale(0.25)
+        
+        projectile.physicsBody = SKPhysicsBody(rectangleOf: projectile.size)
+        projectile.physicsBody?.isDynamic = true
+        projectile.physicsBody?.categoryBitMask = PhysicsCategory.bullet
+        projectile.physicsBody?.contactTestBitMask = PhysicsCategory.dragon
+        projectile.physicsBody?.collisionBitMask = PhysicsCategory.None
+        
         projectile.name = "projectile"
+        projectile.position = CGPoint(x: self.plane.position.x, y: self.plane.position.y)
+        
         self.addChild(projectile)
     }
     
@@ -70,27 +106,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func touchDown(atPoint pos : CGPoint) {
-//        if let n = self.spinnyNode?.copy() as! SKShapeNode? {
-//            n.position = pos
-//            n.strokeColor = SKColor.green
-//            self.addChild(n)
-//        }
     }
     
     func touchMoved(toPoint pos : CGPoint) {
-//        if let n = self.spinnyNode?.copy() as! SKShapeNode? {
-//            n.position = pos
-//            n.strokeColor = SKColor.blue
-//            self.addChild(n)
-//        }
     }
     
     func touchUp(atPoint pos : CGPoint) {
-//        if let n = self.spinnyNode?.copy() as! SKShapeNode? {
-//            n.position = pos
-//            n.strokeColor = SKColor.red
-//            self.addChild(n)
-//        }
     }
     
 //    func didBegin(_ contact: SKPhysicsContact) {
