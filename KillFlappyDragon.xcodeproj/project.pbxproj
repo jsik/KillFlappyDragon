@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BC3D759C1F9342E2002B29DC /* GameOverScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC3D759B1F9342E2002B29DC /* GameOverScene.swift */; };
 		BC6891F41F8DE45D001BAA40 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC6891F31F8DE45D001BAA40 /* AppDelegate.swift */; };
 		BC6891F61F8DE45D001BAA40 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = BC6891F51F8DE45D001BAA40 /* GameScene.sks */; };
 		BC6891F81F8DE45D001BAA40 /* Actions.sks in Resources */ = {isa = PBXBuildFile; fileRef = BC6891F71F8DE45D001BAA40 /* Actions.sks */; };
@@ -18,6 +19,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		BC3D759B1F9342E2002B29DC /* GameOverScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameOverScene.swift; sourceTree = "<group>"; };
 		BC6891F01F8DE45D001BAA40 /* KillFlappyDragon.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KillFlappyDragon.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BC6891F31F8DE45D001BAA40 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BC6891F51F8DE45D001BAA40 /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
@@ -69,6 +71,7 @@
 				BC6892001F8DE45E001BAA40 /* Assets.xcassets */,
 				BC6892021F8DE45E001BAA40 /* LaunchScreen.storyboard */,
 				BC6892051F8DE45E001BAA40 /* Info.plist */,
+				BC3D759B1F9342E2002B29DC /* GameOverScene.swift */,
 			);
 			path = KillFlappyDragon;
 			sourceTree = "<group>";
@@ -150,6 +153,7 @@
 			files = (
 				BC6891FA1F8DE45D001BAA40 /* GameScene.swift in Sources */,
 				BC6891FC1F8DE45D001BAA40 /* GameViewController.swift in Sources */,
+				BC3D759C1F9342E2002B29DC /* GameOverScene.swift in Sources */,
 				BC6891F41F8DE45D001BAA40 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -316,6 +320,7 @@
 				BC68920A1F8DE45E001BAA40 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

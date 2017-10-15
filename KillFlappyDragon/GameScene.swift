@@ -117,16 +117,27 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         var dragonBody:SKPhysicsBody
         if (contact.bodyA.categoryBitMask == 2 && contact.bodyB.categoryBitMask == 1) {
             print("Dragon hit plane")
-            plane.run(deadPlane)
-            //plane.removeFromParent()
+            plane.run(deadPlane, completion: {
+                self.EndofGame(win: false)
+            })
         } else if (contact.bodyA.categoryBitMask == 3 && contact.bodyB.categoryBitMask == 1) {
             dragonBody = contact.bodyB
             guard dragonBody.node != nil else { return }
             (dragonBody.node as! SKSpriteNode).removeFromParent()
-            killedFlappyDragon += 1
+            self.killedFlappyDragon += 1
             countFlappyDragon -= 1
-            print("Projectile hit Dragon " + String(killedFlappyDragon))
+            print("Projectile hit Dragon " + String(self.killedFlappyDragon))
+            if (self.killedFlappyDragon >= 10) {
+                self.EndofGame(win: true)
+            }
         }
+    }
+    
+    func EndofGame(win: Bool) {
+        let gameOverScene = GameOverScene(size: self.size)
+        gameOverScene.winTheGame = win
+        gameOverScene.killedFlappyDragon = self.killedFlappyDragon
+        self.view?.presentScene(gameOverScene, transition: .doorway(withDuration: 1))
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
