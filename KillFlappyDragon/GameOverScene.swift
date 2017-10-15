@@ -16,7 +16,7 @@ class GameOverScene: SKScene {
         super.init(size: size)
         
         self.backgroundColor = .white
-        let textTop = self.size.height/2 - 80
+        let textTop = self.size.height/2 + 80
         let gameOverLabel = SKLabelNode(fontNamed: "Arial")
         gameOverLabel.text = "Game Over"
         gameOverLabel.fontSize = 40
