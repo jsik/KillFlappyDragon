@@ -46,7 +46,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         counter = SKLabelNode(fontNamed: "Arial")
         counter.fontSize = 40
         counter.fontColor = .red
-        counter.position = CGPoint(x: self.size.width - 100, y: self.size.height - 100)
+        counter.position = CGPoint(x: self.size.width - 100, y: self.size.height - 80)
         counter.text = String(self.killedFlappyDragon) + " / 10"
         self.addChild(counter)
     }
